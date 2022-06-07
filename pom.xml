@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--GAV - обязательная информация-->
+    <!--папка java - папка с файлами-->
+    <!--папка target - для скомпилированных файлов и исполняемых файлов-->
+    <groupId>ru.itmo</groupId> <!--идентификатор разработчика,
+                                   обычно доменное имя компании-->
+    <artifactId>maven_project</artifactId> <!--идентификатор проекта,
+                                               обычно название пакета-->
+    <version>1.0-SNAPSHOT</version> <!--версия проекта-->
+    <!--SNAPHOT - говорит о том, что текущая версия проекта находится в разработке и может измениться-->
+    <!--Дополнительная необязательная информация о проекте-->
+    <name>Maven Project</name> <!--название проекта-->
+    <description>
+        About
+        Project
+    </description> <!--описание проекта-->
+    <url>https://maven_project.ru</url><!--ссылка на проект-->
+    <packaging>jar</packaging> <!--тип файла, который будет доступен в результате сборки,
+    поумолчанию jar, если пишем pom - файл не генерируется (для родителей в модульной сборке),
+    war - для веб приложений-->
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source> <!--версия компилятора,
+                                                              минимальная версия компилятора 13-->
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!--кодировка-->
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+    </properties>
+
+    <!--при изменении в файле, особенно в плагинах и зависимостях (библиотеки используемые)
+    обязательно Reload All Project-->
+
+    <!--сборка состоит из фаз, на каждом этапе определенные действия над проектом-->
+    <!--основные фазы указаны в Lifecycle, кроме них также есть фазы "до"
+        и "после" для каждой основной-->
+
+    <!--фаза Clean - удаление папки target-->
+    <!--фаза Validate - проверка исходного кода-->
+    <!--фаза Compile - компиляция файлов - результат файлы с расширением .class-->
+    <!--фаза Test - запуск всех написанных тестов-->
+    <!--фаза Package - сборка архивного файла, либо исполняемого, либо нет-->
+    <!--фаза Verify - проверка архива-->
+    <!--фаза Install - установка проекта в локальный репозиторий-->
+    <!--фаза Site - генерация сайта проекта - html странички-->
+    <!--фаза Deploy - выгрузка в удаленный репозиторий-->
+
+    <!--какие-то фазы можно запускать сами по себе, вызов части фаз запускает автоматическое выполнение других,
+        (например, при запуске package выполняются clean - package)-->
+
+    <!--для выполнения фаз нужны специальные плагины-->
+    <!--к каждой фазе можно привязать один или несколько плагинов-->
+
+    <!--для выполнения плагинов к фазе привязываются задачи плагина,
+        задачи одного плагина могут быть привязаны к разным фазам-->
+
+    <!--плагины поумолчанию можно перенастроить-->
+    <!--плагины можно заменять, добавлять новые-->
+
+
+    <!--maven репозитории хранят плагины и зависимости-->
+    <!--типы репозиториев:
+        1. локальный -  на лок. компьютере (/.m2/repository)
+        2. центральный (глобальный) содержит библиотеки плагины
+        3. корпоративный репозиторий - библиотеки и плагины для внутреннего использования в компании-->
+    <!--поиск библиотеки, плагина сначала осуществляется на локальном ком-пе,
+        если не найдена идет обращение в центральный ропозиторий, к проекту подключается, после скачивания в локальный-->
+    <!--добавка в локальный репозиторий осуществляется фазой install-->
+    <!--для установки зависимости необходимо указывать groupId, artifactId, желательно указывать версию-->
+    <!--<version>1.0-SNAPSHOT</version>версия в разработке-->
+    <!--<version>1.0</version>окончательная версия-->
+    <!--если версия в разработке обновление через глобальный репозиторий-->
+    <!--подключение плагинов реализуется через <build><plagins>-->
+    <!--каждый отдельный плагин в <plugin>-->
+    <!---->
+    <!---->
+    <!---->
+
+    <!--зависимости - библиотеки-->
+    <dependencies>
+        <!--позволяет отправить запрос по http протоколу на сервер-->
+        <dependency> <!--одна зависимость-->
+            <!--обязательные данные для подключения зависимости-->
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <!--версию указывать жлательно-->
+            <version>4.5.13</version>
+            <!--область видимости зависимости, по умолчанию compile
+            - библиотека доступна во время компиляции, выполнения, тестирования (всегда)
+             библиотека будет в jar файле
+             test - во время тестирования,
+             runtime -  во время выполнения и тестирования,
+             provide - доступна на этапе разработки и компиляции, не попадает в итоговый jar файл
+             system - (compile) используется вместе с тегом <systemPath></systemPath> - путь к файлу,
+             область видимости только одна-->
+            <scope>compile</scope>
+        </dependency>
+
+        <!--для json строчек, создавать обьект из строчки и наоборот-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.12.0</version>
+        </dependency>
+        <!--с помощью анатаций сможем управлять какие свойства обьекта добавлять в строчку и как называть -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <!--для корректного преобразования данных: коллекции, времени в json  строчку-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--добавили новый плагин-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration> <!--дополнительная настройка, уникально для кадого плагина, читать документацию-->
+                    <show>private</show> <!--добавлять приватные методы и св-ва в документацию-->
+                </configuration>
+                <!--привязка к фазам сборки-->
+                <executions>
+                    <execution>
+                        <phase>package</phase> <!--название фаза сборки-->
+                        <goals> <!--задачи плагина-->
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--перенастроили-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.1</version>
+                <configuration>
+                    <locales>en, fr</locales>
+                </configuration>
+            </plugin>
+            <!--заменили плагин-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <!--чтобы jar стал исполняемыи-->
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>ru.itmo.lessons.Application</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
